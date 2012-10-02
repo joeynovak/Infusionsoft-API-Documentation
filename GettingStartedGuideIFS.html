@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><title>Getting Started Guide IFS</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+
+
+<body>
+<div class="row">
+    <div class="span8 offset4">
+
+<h1><a name="h.mdd64fsvsbt8"></a><span>Getting Started With The Infusionsoft API</span></h1><p><span>The Infusionsoft API is an incredibly powerful tool to enable you to interact with all the features you enjoy on the web interface, albeit programmatically. This getting started guide uses the PHP SDK in the examples. This guide also assumes a basic level of programming knowledge, but makes special consideration for beginners who may not have as much experience.</span></p><p>
+
+<span>In order for you to gain familiarity with the API, we&rsquo;ll be building some basic form interaction. </span></p>
+
+<h3<span>Useful Working Assumptions</span></h3>
+<p><span><ol><li> The Infusionsoft API is rate limited. While you&rsquo;ll rarely run into this limit, it&rsquo;s important to keep it in mind when writing your code. Pay particular attention when running tight loops. If you find that you&rsquo;re trying to extract a lot of data at once from the API and it&rsquo;s not working, there is a good chance you&rsquo;re running into the rate limit. Unless you're doing a lot of interaction, you have 10,000 API calls to use. After that, you're limited to 2/second. In general, a sustained 2 requests a second is where you&rsquo;ll want to be at to avoid getting rate limited. You can achieve this by adding sleep()&rsquo;s to any tight loops. For a more detailed explanation regarding rate limiting, consult the general API documentation @ <a href="http://help.infusionsoft.com/api/rate_limiting.html">http://help.infusionsoft.com/api/rate_limiting.html</a></span></p></li>
+
+
+<p><span><li> While the API takes great care to make sure your data is stored safely and securely, simply using it won&rsquo;t make your code anymore secure. You&rsquo;ll need to adhere to the best practices for your language relating to security. Here are some great starting points for popular web languages. In addition, we&rsquo;ll give you pointers where you have the opportunity to make your code more secure.</span></p>
+<p>
+<ul>
+<li><p><span>PHP: </span><span ><a  href="http://phpsec.org/projects/guide/">http://phpsec.org/projects/guide/</a></span></p></li>
+<li><span>Ruby: </span><span ><a href="http://guides.rubyonrails.org/security.html">http://guides.rubyonrails.org/security.html</a></span></p></li>
+<li><p><span>Python: </span><span ><a  href="http://www.pythonsecurity.org/">http://www.pythonsecurity.org/</a></span></p></li>
+<li><p><span>ASP: </span><span ><a  href="http://msdn.microsoft.com/en-us/library/ff649100.aspx">http://msdn.microsoft.com/en-us/library/ff649100.aspx</a></span></p></li>
+<li><p><span>C#: </span><span ><a  href="http://msdn.microsoft.com/en-us/library/ms173195(v=vs.80).aspx">http://msdn.microsoft.com/en-us/library/ms173195(v=vs.80).aspx</a></span></p></li>
+
+</li>
+</ol>
+
+
+<h3><span>Configuring For The API</span></h3>
+
+<p><span>The latest version of the PHP SDK is available here: </span><span ><a  href="http://developers.infusionsoft.com/devkits/iSDK.zip">http://developers.infusionsoft.com/devkits/iSDK.zip</a></span></p><p><span>When you&rsquo;re calling the API, you&rsquo;ll need to call it with your subdomain at Infusionsoft. This is the same URL that you login at from the web interface. </span></p><p><span>https://YOURAPPHERE.infusionsoft.com/</span></p>
+
+<p><span>Every single call to the Infusionsoft API is encrypted with HTTPS. Your calls will fail if you're not able to support HTTPS. </span></p><p><span>You&rsquo;ll need to include your private key with every call to authenticate yourself to the application. This is how Infusionsoft knows who is asking for your data.</span></p><p><span>We&rsquo;ll be starting every interaction the same way, by authenticating ourselves to the server. The good news is that when you initialize, the SDK will handle all of this for you.  </span></p>
+
+<p><span>When looking at code examples, keep an eye out for explanatory comments. </span></p>
+
+<p><span>Here&rsquo;s the conn.cfg.php with the credentials available in your Infusionsoft account under Admin-&gt; Settings -&gt; Application &gt; API (At the bottom of the page)</span>
+<h3>To Find Your Private Key</h3>
+
+<span class="badge badge-success">1</span><img src="img/adminsettings.png"><hr><span class="badge badge-success">2</span><img src="img/applicationsettings.png"><hr><span class="badge badge-success">3</span><img src="img/apikey.png"></p>
+Then add that key to your cfg file. If you find you don't have a key, enter an API Passphrase (A password that will generate your key. Don't use your general Infusionsoft Password) and hit save. This will generate a key for you.
+<pre>
+<p><span>$connInfo = array('connectionName:YourAppName:i:XXXXXPRIVATE_KEYXXXXX:This is the connection for YourAppName.infusionsoft.com');</span></p>
+</pre>
+
+<p><span>The first part of the each configuration line is the &quot;name&quot; of that connection, followed by parameters to set the application name, API key, API type, and comments.</span></p><p><span>Once you&rsquo;re configured and connected, you can start making calls to the API. The Infusionsoft iSDK does most of the leg work for you. After you&rsquo;ve created the object, it will remember your connection details and supply them on any subsequent call.</span></p><p><span>It&rsquo;s not compulsory to do $app-&gt;cfgCon before your first call, but it&rsquo;s recommended because it will let you now if you have a problem with your connection right away, rather than before you get into your program&rsquo;s logic.</span></p>
+
+<p><h3>Putting The API To Work </h3></p><p><span>As an example exercise we&rsquo;ll be writing code to read in data from a form, query the Infusionsoft API, and output the information returned. </span></p>
+
+<p>Your program logic should be encapsulated in a successful test call to the API. If you're taking an object oriented approach, you'd want to place this code in your constructor. </p>
+
+<pre>
+<p class="c0 c1"><span class="c5"></span></p><p><span>&lt;?php <br>require(&quot;isdk.php&quot;); &nbsp;<br>$app = new iSDK;<br>if($app-&gt;cfgCon(&quot;connectionName&quot;))<br>{ </span><span class="c6">&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp;//This is the name referenced in conn.cfg.php<br></span><span>&nbsp; &nbsp; &nbsp; &nbsp;echo &quot;app connected!&lt;br/&gt;&quot;; <br>} &nbsp; &nbsp;<br>else <br>{<br> &nbsp; &nbsp;echo &quot;connection failed!&lt;br/&gt;&quot;; &nbsp; &nbsp;<br>}<br></span></p>
+</pre>
+
+<p>For the sake of brevity we&rsquo;ll avoid doing sanity checks, but you should be checking to make sure that your email is in the correct format and that the name is in the correct format. Also test to make sure they&rsquo; aren&rsquo;t blank!</p>
+
+<pre>
+<p><span>&lt;?php </span></p><p><span>//First, let&rsquo;s read in the data from our form and make sure it&rsquo;s sane.</span></p>$email = $_POST[&lsquo;email&rsquo;];<br>$first_name = $_POST[&lsquo;first&rsquo;];<br>$last_name = $_POST[&lsquo;last&rsquo;]; </pre>
+
+<p>It's highly encouraged that you process your variables to make sure that they're safe to put in your database. In addition, it's important to note the the Infusionsoft API is NOT case sensitive. So Test@Test.com will match test@test.com.</p>
+
+<p>When working with methods that return items, the SDK requires that you send array to specify which items you want to return. If you send an empty array, you'll get back the most rudimentary form of the data you asked for. For example, with the Contact service, you'll just get the Contact ID.</p>
+
+<pre>
+$returnFields = array('Id', 'FirstName', 'LastName');
+$contacts = $app->findByEmail("johndoe@gmail.com",$returnFields);
+</pre>
+
+<p> When your data is returned, it will be returned as an array of associative arrays. </p>
+
+<pre>
+print_r($contacts)
+Array
+(
+    [0] => Array
+        (
+            [FirstName] => John 
+            [Id] => 3
+            [LastName] => Doe
+        )
+
+)
+</pre>
+
+<p>When you run into questions about what a particular call is returning, it's often very useful to use the print_r function to help understand what the calls are returning, and how you can reference them. When you put it all together you get:</p>
+
+<pre> 
+require("isdk.php");  
+$app = new iSDK;
+if($app->cfgCon("connectionName"))
+{  
+       //This is the name referenced in conn.cfg.php
+       echo "app connected!"; 
+}    
+else 
+{
+    echo "connection failed!";
+    die();    
+}
+
+$returnFields = array('Id', 'FirstName', 'LastName');
+$emails = $app->findByEmail("jondoe@gmail.com",$returnFields);
+if(sizeof($emails) == 0)
+{
+	echo "Found no one by that name";
+}
+	
+</pre>
+
+
+
+	</div>
+</div>
+
+</body></html>
