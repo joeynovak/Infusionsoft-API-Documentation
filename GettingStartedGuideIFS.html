@@ -16,8 +16,8 @@
 
 <span>In order for you to gain familiarity with the API, we&rsquo;ll be building some basic form interaction. </span></p>
 
-<h3<span>Useful Working Assumptions</span></h3>
-<p><span><ol><li> The Infusionsoft API is rate limited. While you&rsquo;ll rarely run into this limit, it&rsquo;s important to keep it in mind when writing your code. Pay particular attention when running tight loops. If you find that you&rsquo;re trying to extract a lot of data at once from the API and it&rsquo;s not working, there is a good chance you&rsquo;re running into the rate limit. Unless you're doing a lot of interaction, you have 10,000 API calls to use. After that, you're limited to 2/second. In general, a sustained 2 requests a second is where you&rsquo;ll want to be at to avoid getting rate limited. You can achieve this by adding sleep()&rsquo;s to any tight loops. For a more detailed explanation regarding rate limiting, consult the general API documentation @ <a href="http://help.infusionsoft.com/api/rate_limiting.html">http://help.infusionsoft.com/api/rate_limiting.html</a></span></p></li>
+<h3>Useful Working Assumptions</h3>
+<p><span><ol><li> The Infusionsoft API is rate limited. While you&rsquo;ll rarely run into this limit, it&rsquo;s important to keep it in mind when writing your code. Pay particular attention when running tight loops. If you find that you&rsquo;re trying to extract a lot of data at once from the API and it&rsquo;s not working, there is a good chance you&rsquo;re running into the rate limit. Unless you're constantly interacting with the API, you have 10,000 API calls to use. After that, you're limited to 2/second. In general, a sustained 2 requests a second is where you&rsquo;ll want to be at to avoid getting rate limited. You can achieve this by adding sleep()&rsquo;s to any tight loops. For a more detailed explanation regarding rate limiting, consult the general API documentation @ <a href="http://help.infusionsoft.com/api/rate_limiting.html">http://help.infusionsoft.com/api/rate_limiting.html</a></span></p></li>
 
 
 <p><span><li> While the API takes great care to make sure your data is stored safely and securely, simply using it won&rsquo;t make your code anymore secure. You&rsquo;ll need to adhere to the best practices for your language relating to security. Here are some great starting points for popular web languages. In addition, we&rsquo;ll give you pointers where you have the opportunity to make your code more secure.</span></p>
@@ -114,6 +114,8 @@ if(sizeof($emails) == 0)
 }
 	
 </pre>
+
+<p>The API documentation is your gateway to finding the answers you need. It's a living document that's available on <a href="https://github.com/infusionsoft/Infusionsoft-API-Documentation">GitHub</a> in case you find yourself wanting to make contributions. There, you can find examples for all the methods, as well as examples of using the PHP SDK. <a href="http://help.infusionsoft.com/api/index.html">You can find all the documentation here.</a>
 
 
 
