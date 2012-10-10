@@ -960,13 +960,28 @@ $result = $app->deleteInvoice($invoiceId);</pre>
 					<h3>Sample Request</h3>
 					<pre class="prettyprint">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
 &lt;methodCall&gt;
-  &lt;methodName&gt;InvoiceService.createInvoiceForRecurring&lt;/methodName&gt;
+  &lt;methodName&gt;InvoiceService.addManualPayment&lt;/methodName&gt;
   &lt;params&gt;
     &lt;param&gt;
       &lt;value&gt;&lt;string&gt;privateKey&lt;/string&gt;&lt;/value&gt;
     &lt;/param&gt;
     &lt;param&gt;
-      &lt;value&gt;&lt;int&gt;recurringOrderId&lt;/int&gt;&lt;/value&gt;
+      &lt;value&gt;&lt;int&gt;invoiceId&lt;/int&gt;&lt;/value&gt;
+    &lt;/param&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;double&gt;amt&lt;/double&gt;&lt;/value&gt;
+    &lt;/param&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;dateTime&gt;paymentDate&lt;/dateTime&gt;&lt;/value&gt;
+    &lt;/param&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;string&gt;paymentType&lt;/string&gt;&lt;/value&gt;
+    &lt;/param&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;string&gt;paymentDescription&lt;/string&gt;&lt;/value&gt;
+    &lt;/param&gt;
+    &lt;param&gt;
+      &lt;value&gt;&lt;boolean&gt;bypassCommissions&lt;/boolean&gt;&lt;/value&gt;
     &lt;/param&gt;
   &lt;/params&gt;
 &lt;/methodCall&gt;</pre>
@@ -976,13 +991,15 @@ $result = $app->deleteInvoice($invoiceId);</pre>
 &lt;methodResponse&gt;
   &lt;params&gt;
     &lt;param&gt;
-      &lt;value&gt;&lt;i4&gt;0&lt;/i4&gt;&lt;/value&gt;
+      &lt;value&gt;&lt;boolean&gt;1&lt;/boolean&gt;&lt;/value&gt;
     &lt;/param&gt;
   &lt;/params&gt;
 &lt;/methodResponse&gt;</pre>
 	
 										<h3>PHP iSDK Sample</h3>
-					<pre class="prettyprint">$result = $app->recurringInvoice($recurringOrderId);</pre>
+					<pre class="prettyprint">$currentDate = date("d-m-Y");
+$pDate = $app->infuDate($currentDate);
+$result = $app->manualPmt(123,9.95,$pDate,'Credit Card','$9.95 paid by Credit Card',false);</pre>
 					
 					<!-- METHOD END -->
 					
