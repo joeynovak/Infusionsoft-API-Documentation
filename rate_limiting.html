@@ -59,7 +59,7 @@
 							</tr>
 							<tr>
 								<td>Maximum number of credits that can be accumulated</td>
-								<td>2000</td>
+								<td>10000</td>
 							</tr>
 							<tr>
 								<td>Maximum number of threads that can be throttled at any given time</td>
@@ -77,9 +77,9 @@
 					<p>First thing to keep in mind when learning about the Infusionsoft rate limiting system is that throttling happens only for the app, not for the API client.
 					For example, if a customer purchases 3 add-ons, each of the add-ons must compete with the others for the API credits.</p>
 					<p>Every application starts with 0 credits. For every 500ms the application does not get any API traffic, one credit is rewarded. 
-					If nothing happends after about 16 minutes, the application will reach its max number of allowed credits (max credits will always be 2,000).</p>
+					If nothing happens after about an hour, the application will reach its max number of allowed credits (max credits will always be 10,000).</p>
 					<p>Now, let's suppose the customer starts with a large sync of his database. In this example, we'll start with 10,000 records.  
-					The customer's API client will blow through the 2,000 accumulated credits as fast as it can until credits hit zero.  
+					The customer's API client will blow through the 10,000 accumulated credits as fast as it can until credits hit zero.  
 					Once it hits zero, the customer will have to wait for 500ms to earn one new credit.  
 					Each subsequent call will be blocked (on the Infusionsoft side) until 500ms has passed from the most recently completed API call.  
 					In essence, it will appear to the API client that each call is taking exactly 500ms (plus/minus network latency).  
