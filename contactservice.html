@@ -49,7 +49,7 @@
             <li><a href="#addWithDupCheck">addWithDupCheck</a></li>
             <li><a href="#update">update</a></li>
             <li class="divider"></li>
-            <li><a href="dataservice.html">DataService</a></li>
+            <li><a href="dataservice.html">DataService</a></li><li><a href="creditcardsubmissionservice.html">CreditCardSubmissionService</a></li><li><a href="creditcardsubmissionservice.html">CreditCardSubmissionService</a></li>
             <li><a href="discountservice.html">DiscountService</a></li>
             <li><a href="emailservice.html">EmailService</a></li>
             <li><a href="fileservice.html">FileService</a></li>
@@ -92,7 +92,7 @@
     </tr>
     <tr>
         <td>data</td>
-        <td>array</td>
+        <td>struct</td>
         <td>an associative array of the data for this new contact record. The array key is the field name to store the
             value within
         </td>
@@ -424,7 +424,7 @@ $result = $app->grpAssign($contactId, $groupId);</pre>
     </tr>
     <tr>
         <td>email</td>
-        <td>email</td>
+        <td>string</td>
         <td>The email address to search contacts by</td>
     </tr>
     <tr>
@@ -728,71 +728,6 @@ $result = $app->campPause($contactId, $seqId);</pre>
 					<pre class="prettyprint">$contactId = 123;
 $fusId = 456;
 $result = $app->campRemove($contactId, $fusId);</pre>
-
-<hr>
-
-<div class="full_method">
-    <span class="collection">ContactService.</span><span class="method"><a
-        name="removeFromGroup">removeFromGroup</a></span>
-</div>
-
-<p>Removes a tag from a contact (groups were the original name of tags)</p>
-
-<h3>Required Parameters</h3>
-<table class="table table-bordered table-striped">
-    <thead>
-    <th>Parameter Name</th>
-    <th>Type</th>
-    <th>Definition</th>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Key</td>
-        <td>string</td>
-        <td>Your Infusionsoft API key</td>
-    </tr>
-    <tr>
-        <td>contactId</td>
-        <td>int</td>
-        <td>The Id number of the contact you would like to remove the tag from</td>
-    </tr>
-    <tr>
-        <td>TagId</td>
-        <td>int</td>
-        <td>The tag Id number. This is found on the Setup->Tags menu</td>
-    </tr>
-    </tbody>
-</table>
-<h3>Sample Request</h3>
-					<pre class="prettyprint">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
-&lt;methodCall&gt;
-&lt;methodName&gt;ContactService.removeFromGroup&lt;/methodName&gt;
-  &lt;params&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;string&gt;privateKey&lt;/string&gt;&lt;/value&gt;
-    &lt;/param&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;int&gt;contactIDNumber&lt;/int&gt;&lt;/value&gt;
-    &lt;/param&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;int&gt;groupIDNumber&lt;/int&gt;&lt;/value&gt;
-    &lt;/param&gt;
-  &lt;/params&gt;
-&lt;/methodCall&gt;</pre>
-<h3>Sample Response</h3>
-<pre class="prettyprint">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
-&lt;methodResponse&gt;
-  &lt;params&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;boolean&gt;0&lt;/boolean&gt;&lt;/value&gt;
-    &lt;/param&gt;
-  &lt;/params&gt;
-&lt;/methodResponse&gt;</pre>
-
-<h3>PHP iSDK Sample</h3>
-					<pre class="prettyprint">$contactId = 123;
-$groupId = 456;
-$result = $app->grpRemove($contactId, $groupId);</pre>
 
 <hr>
 
@@ -1108,7 +1043,7 @@ $result = $app->runAS($contactId, $actionId);</pre>
     </tr>
     <tr>
         <td>data</td>
-        <td>array</td>
+        <td>struct</td>
         <td>An associative array of the data for this new contact record. The array key is the field name to store the
             value within
         </td>
@@ -1197,7 +1132,7 @@ $result = $app->runAS($contactId, $actionId);</pre>
     </tr>
     <tr>
         <td>data</td>
-        <td>array</td>
+        <td>struct</td>
         <td>An associate array of the data for this contact. The array key needs to be the field name in which you store
             the value
         </td>

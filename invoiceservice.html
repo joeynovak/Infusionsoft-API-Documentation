@@ -33,7 +33,7 @@
             <li><a href="affiliateservice.html">AffiliateService</a></li>
             <li><a href="affiliateprogramservice.html">AffiliateProgramService</a></li>
             <li><a href="contactservice.html">ContactService</a></li>
-            <li><a href="dataservice.html">DataService</a></li>
+            <li><a href="dataservice.html">DataService</a></li><li><a href="creditcardsubmissionservice.html">CreditCardSubmissionService</a></li>
             <li><a href="discountservice.html">DiscountService</a></li>
             <li><a href="emailservice.html">EmailService</a></li>
             <li><a href="fileservice.html">FileService</a></li>
@@ -1792,96 +1792,6 @@ if ($operation) {
 echo &quot;Invoice 43 now owes: &quot; . $app-&gt;amtOwed(43);</pre>
 <!-- METHOD END --><!-- METHOD START -->
 <hr/>
-<div class="full_method">
-    <span class="collection">InvoiceService.</span><span class="method"><a name="calculateAmountOwed">calculateAmountOwed</a></span>
-</div>
-<p>Used to determine the outstanding amount owed on a given invoice.</p>
-
-<h3>
-    Required Parameters</h3>
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>
-            Parameter Name
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Definition
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>
-            privateKey
-        </td>
-        <td>
-            string
-        </td>
-        <td>
-            Your Infusionsoft API key
-        </td>
-    </tr>
-    <tr>
-        <td>
-            invoiceId
-        </td>
-        <td>
-            int
-        </td>
-        <td>
-            The invoice Id number you would like amount owed for
-        </td>
-    </tr>
-    </tbody>
-</table>
-<h3>
-    Returns</h3>
-
-<p>(double) outstanding amount on the supplied invoice</p>
-
-<h3>
-    Sample Request</h3>
-			<pre class="prettyprint">
-&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;
-&lt;methodCall&gt;
-  &lt;methodName&gt;InvoiceService.calculateAmountOwed&lt;/methodName&gt;
-  &lt;params&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;string&gt;privateKey&lt;/string&gt;&lt;/value&gt;
-    &lt;/param&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;int&gt;invoiceId&lt;/int&gt;&lt;/value&gt;
-    &lt;/param&gt;
-  &lt;/params&gt;
-&lt;/methodCall&gt;</pre>
-<h3>
-    Sample Response</h3>
-			<pre class="prettyprint">
-&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;
-&lt;methodResponse&gt;
-  &lt;params&gt;
-    &lt;param&gt;
-      &lt;value&gt;&lt;double&gt;41.14&lt;/double&gt;&lt;/value&gt;
-    &lt;/param&gt;
-  &lt;/params&gt;
-&lt;/methodResponse&gt;</pre>
-<h3>
-    PHP iSDK Sample</h3>
-			<pre class="prettyprint">
-$payDate = $app-&gt;infuDate(&quot;01-12-2007&quot;);
-echo &quot;Invoice 43 owes: &quot; . $app-&gt;amtOwed(43) ;
-$operation = $app-&gt;manualPmt(43,5.06,$payDate,&quot;Check&quot;,&quot;Personal check&quot;,false);
-if ($operation) {
-    echo &quot;Manual Payment Successful&quot;;
-} else {
-    echo &quot;Manual Payment Failed&quot;;
-}
-echo &quot;Invoice 43 now owes: &quot; . $app-&gt;amtOwed(43);</pre>
-<!-- METHOD END --><!-- METHOD START -->
 <hr/>
 <div class="full_method">
     <span class="collection">InvoiceService.</span><span class="method"><a name="getAllPaymentOptions">getAllPaymentOptions</a></span>
